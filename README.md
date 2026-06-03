@@ -4,6 +4,69 @@ This repository contains two connected experiments in building a machine that un
 
 ---
 
+## The Problem Being Solved
+
+Computers are good at finding things. But for decades they could only find things they had seen *exactly before*.
+
+Search for "car repair" and you'd miss every article that used the word "automobile" or "vehicle" instead. Ask a database a question and it would scan for your exact words, not your intent. The machine had no idea that "heart attack" and "cardiac arrest" refer to the same thing, or that someone searching for "something to eat in Italy" probably wants results about Italian food.
+
+This is the fundamental limitation of **keyword search** — it matches strings, not ideas.
+
+```
+Traditional search:   "car repair"  ──►  finds "car repair"
+                                    ──✗  misses "auto mechanic"
+                                    ──✗  misses "vehicle maintenance"
+                                    ──✗  misses "fixing your automobile"
+```
+
+The problem being solved here is: **how do you teach a machine what words mean, so it can match intent rather than just letters?**
+
+---
+
+## Keyword Search vs. Semantic Search
+
+The difference comes down to one distinction:
+
+> **Traditional search finds matching words. Semantic search finds matching meaning.**
+
+Consider a user who types: *"I feel terrible and my chest hurts"*
+
+A keyword search engine looks for documents containing those exact words. It might return nothing useful, or worse, return unrelated results that happen to contain "chest" and "hurts."
+
+A semantic search engine understands that this phrase lives in the same conceptual neighbourhood as "heart attack symptoms", "cardiac pain", "chest tightness causes" — not because the words match, but because the *meaning* is geometrically close in vector space.
+
+| | Keyword Search | Semantic Search |
+|---|---|---|
+| How it works | Matches exact characters | Matches vector proximity |
+| Finds synonyms | ✗ No | ✓ Yes |
+| Understands context | ✗ No | ✓ Yes |
+| "car" finds "automobile" | ✗ No | ✓ Yes |
+| "fix" finds "repair" | ✗ No | ✓ Yes |
+| Speed | Very fast | Depends on index size |
+| Needs training data | ✗ No | ✓ Yes |
+
+Semantic search is only possible if words have been turned into vectors first — if the machine has already learned, from reading, that "car" and "automobile" belong in the same region of meaning-space. That is exactly what this project builds.
+
+---
+
+## Why Semantic Search Matters
+
+Every system that processes human language hits this wall eventually.
+
+A customer support bot that only does keyword matching will fail the moment a user phrases their problem differently than the FAQ was written. A recommendation engine that matches on category tags will miss connections a human reader would find obvious. A medical database that requires exact terminology will fail patients who don't know the clinical words for what they're experiencing.
+
+The deeper goal of this project is to build the *foundation* that makes semantic understanding possible: a vector space where proximity means relatedness, learned entirely from how words are actually used by humans — not from rules someone wrote down.
+
+Once words are vectors, almost everything becomes geometry:
+- **Search** becomes: find vectors near this query vector
+- **Recommendation** becomes: find items near this user's taste vector  
+- **Classification** becomes: which cluster does this document's centroid fall into
+- **Translation** becomes: find the corresponding vector in another language's space
+
+The hard part — and what this project tackles — is building that vector space honestly, from scratch, using nothing but mathematics and observed language patterns.
+
+---
+
 ## The Core Idea
 
 Human language is slippery. Words don't just carry definitions — they carry *relationships*. "Engine" and "car" belong together. "Knife" and "wife" do not, even though they rhyme. Teaching a machine to feel that difference without simply memorising a dictionary requires a different kind of representation.
